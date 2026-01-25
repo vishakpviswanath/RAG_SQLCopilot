@@ -1,0 +1,38 @@
+[
+  {
+    "doc_id": "fact_trips",
+    "table": "fact_trips",
+    "type": "FACT",
+    "content": "\nTABLE: fact_trips\nTYPE: FACT\nGRAIN: One row per completed trip\n\nPRIMARY KEY:\n- trip_id\n\nFOREIGN KEYS:\n- customer_id \u2192 dim_customers.customer_id\n- driver_id \u2192 dim_drivers.driver_id\n- vehicle_id \u2192 dim_vehicles.vehicle_id\nMEASURES:\n- trip_start_time\n- trip_end_time\n- distance_km\n- trip_duration_minutes\n- fare_amount\n\nCOMMON KPIs:\n- Total Trips = COUNT(trip_id)\n- Total Revenue = SUM(total_amount)\n- Average Fare = AVG(fare_amount)\n- Average Trip Distance = AVG(distance_km)\n- Revenue per Trip = SUM(fare_amount) / COUNT(trip_id)\n\n"
+  },
+  {
+    "doc_id": "dim_customers",
+    "table": "dim_customers",
+    "type": "DIMENSION",
+    "content": "\nTABLE: dim_customers\nTYPE: DIMENSION\n\nPRIMARY KEY:\n- customer_id\n\nATTRIBUTES:\n- first_name\n- last_name\n- email\n- phone_number\n- city\n- signup_date\n\nJOIN LOGIC:\n- fact_trips.customer_id = dim_customers.customer_id\n"
+  },
+  {
+    "doc_id": "dim_drivers",
+    "table": "dim_drivers",
+    "type": "DIMENSION",
+    "content": "\nTABLE: dim_drivers\nTYPE: DIMENSION\n\nPRIMARY KEY:\n- driver_id\n\nFOREIGN KEYS:\n- vehicle_id \u2192 dim_vehicles.vehicle_id\n\nATTRIBUTES:\n- first_name\n- last_name\n- phone_number\n- driver_rating\n- city\n\nJOIN LOGIC:\n- fact_trips.driver_id = dim_drivers.driver_id\n\n"
+  },
+  {
+    "doc_id": "dim_vehicles",
+    "table": "dim_vehicles",
+    "type": "DIMENSION",
+    "content": "\nTABLE: dim_vehicles\nTYPE: DIMENSION\n\nPRIMARY KEY:\n- vehicle_id\n\nATTRIBUTES:\n- license_plate\n- make\n- model\n- year\n- vehicle_type\n\nJOIN LOGIC:\n- fact_trips.vehicle_id = dim_vehicles.vehicle_id\n"
+  },
+  {
+    "doc_id": "dim_locations",
+    "table": "dim_locations",
+    "type": "DIMENSION",
+    "content": "\nTABLE: dim_locations\nTYPE: DIMENSION\n\nPRIMARY KEY:\n- location_id\n\nATTRIBUTES:\n- city\n- state\n- country\n- latitude\n- longitude\n\n\n"
+  },
+  {
+    "doc_id": "dim_payments",
+    "table": "dim_payments",
+    "type": "DIMENSION",
+    "content": "\nTABLE: dim_payments\nTYPE: DIMENSION\n\nPRIMARY KEY:\n- payment_id\n\nFOREIGN KEYS:\n- customer_id \u2192 dim_customers.customer_id\n- trip_id \u2192 fact_trips.trip_id\n\nATTRIBUTES:\n- payment_method\n- payment_status\n- transaction_time\n- amount\n\nJOIN LOGIC:\n- fact_trips.trip_id = dim_payments.trip_id\n"
+  }
+]
