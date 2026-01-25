@@ -1,3 +1,11 @@
+<div align ="center">
+SQL Analyst Copilot (RAG-powered, Schema-Aware)
+</div>
+
+A Retrieval-Augmented Generation (RAG) based SQL Copilot that generates accurate, production grade Spark SQL by grounding LLM outputs in Databricks Unity Catalog metadata.
+
+This project demonstrates how to build a hallucination-resistant SQL generation system by combining vector search, schema metadata retrieval and constrained LLM prompting.
+
 <div align="center">
 
 # Architecture Overview
@@ -11,4 +19,5 @@ graph TD
     D --> E(GPT-5-nano: SQL Generator)
     E --> F[Validated SQL Query]
     
+
 
