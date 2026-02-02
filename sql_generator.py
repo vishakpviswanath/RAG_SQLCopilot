@@ -21,8 +21,7 @@ Rules:
 - Use Spark SQL syntax
 """
 
-def generate_sql(user_question: str) -> str:
-    context = retrieve_context(user_question)
+def generate_sql(user_question: str, context: str) -> str:
 
     response = client.chat.completions.create(
         model="gpt-5-nano",

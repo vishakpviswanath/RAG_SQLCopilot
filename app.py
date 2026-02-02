@@ -23,9 +23,9 @@ def main():
 
             confidence = compute_confidence(sql, context)
 
-            print(f"\nAttempt {attempt} | Confidence: {confidence:.2f}")
+            print(f"\nAttempt {attempt} | Confidence: {confidence[2]['Overall Confidence']}")
 
-            if confidence >= CONFIDENCE_THRESHOLD:
+            if confidence[2]["Overall Confidence"] >= CONFIDENCE_THRESHOLD:
                 print("\n✅ Final SQL:\n")
                 print(sql)
                 break
@@ -38,6 +38,10 @@ def main():
                         reason="Low confidence after retries"
                     )
                     print("\n❌ Unable to generate confident SQL. Logged for review.\n")
+                    print(confidence[0]["Retrieval Score"])
+                    print(confidence[1]["SQL Validity"])
+                    print("\n Final SQL Generated:\n")
+                    print(sql)
 
 
 if __name__ == "__main__":
